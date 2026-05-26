@@ -8,18 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green: #2D6A4F;
-  --green-light: #52B788;
-  --green-pale: #D8F3DC;
-  --amber: #E76F51;
-  --amber-pale: #FFF3EC;
-  --gray-dark: #1B2B1F;
-  --gray-mid: #4A5E51;
-  --gray-light: #F4F8F5;
-  --border: #C8DDD0;
-  --white: #FFFFFF;
-  --juji: #FFF7E6;
-  --juji-border: #F4A261;
+  --green: #2D6A4F; --green-light: #52B788; --green-pale: #D8F3DC;
+  --amber: #E76F51; --amber-pale: #FFF3EC;
+  --gray-dark: #1B2B1F; --gray-mid: #4A5E51; --gray-light: #F4F8F5;
+  --border: #C8DDD0; --juji: #FFF7E6;
   --shadow: 0 2px 12px rgba(45,106,79,0.10);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,8 +57,10 @@ main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
 .card-info-value a:hover { text-decoration: underline; }
 .card-features { font-size: 13px; line-height: 1.7; color: var(--gray-mid); padding: 10px 12px; background: var(--gray-light); border-radius: 6px; margin-bottom: 10px; }
 .card-kuchikomi { border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
-.kuchikomi-title { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+.kuchikomi-title { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
 .kuchikomi-empty { font-size: 12px; color: #aaa; font-style: italic; }
+.review-item { background: var(--gray-light); border-radius: 6px; padding: 10px 12px; margin-bottom: 6px; font-size: 13px; line-height: 1.7; }
+.review-meta { font-size: 11px; color: #aaa; margin-top: 6px; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
 .card-updated { font-size: 10px; color: #bbb; }
 .correction-btn { font-size: 11px; color: var(--green); text-decoration: none; border: 1px solid var(--border); border-radius: 4px; padding: 4px 10px; transition: all 0.18s; white-space: nowrap; }
@@ -81,7 +75,6 @@ main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
 .btn-kuchikomi { background: white; color: var(--green); }
 .btn-correction { background: rgba(255,255,255,0.2); color: white; border: 1.5px solid rgba(255,255,255,0.5); }
 .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-mid); }
-.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
 footer { background: var(--green); color: rgba(255,255,255,0.7); text-align: center; padding: 24px; font-size: 12px; line-height: 1.8; }
 footer strong { color: white; }
 @media (max-width: 600px) { .controls { top: 76px; } .card-info { grid-template-columns: 1fr; } header { padding: 16px; } header h1 { font-size: 15px; } }
@@ -148,7 +141,8 @@ const FACILITIES = [
     "url": "http://www.puraile.com/",
     "features": "毎日、日替わりで様々な講座を行っています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 2,
@@ -165,7 +159,8 @@ const FACILITIES = [
     "url": "http://spros.jp",
     "features": "①1つでも多く自立できる事を増やし、②ありのままの自分を受け入れ、③人から愛される人物になる、様に支援しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 3,
@@ -182,7 +177,8 @@ const FACILITIES = [
     "url": "http://spros.jp",
     "features": "小学校1年生〜高校3年生まで対象・送迎あり",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 4,
@@ -199,7 +195,8 @@ const FACILITIES = [
     "url": "http://www.doronko.jp/",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 5,
@@ -216,7 +213,8 @@ const FACILITIES = [
     "url": "http://www.ion-aion.org",
     "features": "自立や就労準備に特化した事業所です。プログラム（絵画・しごと・運動）を通じて就労に必要なスキル、自己コントロールができる力を身につけていけるよう支援しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 6,
@@ -233,7 +231,8 @@ const FACILITIES = [
     "url": "http://h-navi.jp/support_facility/facilities/163690",
     "features": "おそうじやお洗濯など、家事に重点を置いた活動を行っています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 7,
@@ -250,7 +249,8 @@ const FACILITIES = [
     "url": "http://soranotsubasa.com/",
     "features": "調理実習、工作、絵画、音楽作業訓練、体幹訓練、教科学習、ルールゲームなどを通じて3つの力（生活力、余暇力（余暇を楽しむ力）、体験力）を伸ばすことを目指し療育的な取組みを中心とした活動を行っています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 8,
@@ -267,7 +267,8 @@ const FACILITIES = [
     "url": "https://kuma3ho-day.com",
     "features": "工作・レクリエーション・調理など集団活動を通じて、社会性を養えるよう支援します。また、「個別課題」の時間を設け、それぞれの目標に合った課題に取り組めるよう支援します。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 9,
@@ -284,7 +285,8 @@ const FACILITIES = [
     "url": "https://www.tuki-no-usagi.com/",
     "features": "主に発達障害の小中高生を対象に、料理療法の考えを取り入れたおやつづくりと外遊び、生活動作の支援に力を入れています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 10,
@@ -301,7 +303,8 @@ const FACILITIES = [
     "url": "https://smilewith.tokyo/ribonu/",
     "features": "小学生〜高校生までを対象とし、小学生と中高生で、活動内容によっては分かれて活動。小学生は外遊び中心の活動の中で、集団活動、体力作りにつながるプログラムを提供。中・高校生は、集団生活への適応や社会生活の向上などを目指し、様々な体験を通じ適切な支援を行なっています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 11,
@@ -318,7 +321,8 @@ const FACILITIES = [
     "url": "http://www.mutsukikai.jp/",
     "features": "生活能力や社会経験向上のために療育活動や余暇活動を放課後や長期休暇中に提供しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 12,
@@ -335,7 +339,8 @@ const FACILITIES = [
     "url": "http://www.mutsukikai.jp/",
     "features": "生活能力や社会経験向上のために療育活動や余暇活動を放課後や長期休暇中に提供しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 13,
@@ -352,7 +357,8 @@ const FACILITIES = [
     "url": "https://totoroclub.or.jp/",
     "features": "障害を抱えるお子さんの気持ちに寄り添った対応をし、社会での適応能力を高めるためにサポートしています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 14,
@@ -369,7 +375,8 @@ const FACILITIES = [
     "url": "https://totoroclub.or.jp/",
     "features": "近所のコンビニや大型スーパーなどへ行き買い物を通して社会のルールやマナーを学ぶ機会を設けています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 15,
@@ -386,7 +393,8 @@ const FACILITIES = [
     "url": "http://copain-sakura.com",
     "features": "放課後等デイサービスと児童発達支援の複合施設です。集団での活動をメインに療育を行っております。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 16,
@@ -403,7 +411,8 @@ const FACILITIES = [
     "url": "https://razm1109.com",
     "features": "主に障がいのあるお子さんを対象に、体幹トレーニングなど、体育教員による、体を強くするエクササイズを提供しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 17,
@@ -420,7 +429,8 @@ const FACILITIES = [
     "url": "http://www.mutsukikai.jp/",
     "features": "小学生〜高校生の重症心身障害児を対象としており、医療ケアを必要とする児童の受け入れもしています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 18,
@@ -437,7 +447,8 @@ const FACILITIES = [
     "url": "https://lion-heart.co/kids/",
     "features": "遊びの中に「運動/SST/微細/LST」などの療育要素を取り入れた支援に力を入れています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 19,
@@ -454,7 +465,8 @@ const FACILITIES = [
     "url": "https://lion-heart.co/kids/",
     "features": "遊びの中の療育実践をモットーに、毎日楽しいイベントを行っています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 20,
@@ -471,7 +483,8 @@ const FACILITIES = [
     "url": "http://usagino-mimi.net",
     "features": "医療的ケアが必要な障害のある方や障害のあるお子さんを主な対象とし、児童発達支援、生活介護の2事業を運営しています。「だれも孤立させない」「みんなに居場所と出番を」を理念に、地域とのつながりを大切にしています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 21,
@@ -488,7 +501,8 @@ const FACILITIES = [
     "url": "http://junior.litalico.jp/school/tokyo/lj-6082/",
     "features": "発達が気になる未就学児のお子さまに、最適な学びを提供します。また、お子さまが通う保育園や幼稚園などを訪問し、連携を図ることで、お子さまの環境に向けた支援も提供しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 22,
@@ -505,7 +519,8 @@ const FACILITIES = [
     "url": "http://www.with-ac.com/shisetu/higashifushimi/",
     "features": "お子様達がリラックスしてのびのび過ごせるような放課後等デイサービス・児童発達支援を目指しています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 23,
@@ -522,7 +537,8 @@ const FACILITIES = [
     "url": "https://www.doronko.jp",
     "features": "戸外に出て生き物や泥遊びなど、子どもがやりたいことをじっくり取り組めるよう支援を行います。生活型（マンスリー）と通所型（ビジター）コースがあり、給食提供も行っています。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 24,
@@ -539,7 +555,8 @@ const FACILITIES = [
     "url": "http://kuma3ho-day.com",
     "features": "西東京市在住の小1〜高3のお子様が通われています。「楽しさの中に成長」をモットーに毎日様々な活動に取り組んでいます。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 25,
@@ -556,7 +573,8 @@ const FACILITIES = [
     "url": "http://smilewith.tokyo/ribon/",
     "features": "和太鼓を叩いたり、戸外や室内での「運動」を通して体幹や感覚など身体の中心がしっかり発達するように支援します。",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 26,
@@ -573,7 +591,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 27,
@@ -590,7 +609,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 28,
@@ -607,7 +627,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 29,
@@ -624,7 +645,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 30,
@@ -641,7 +663,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 31,
@@ -658,7 +681,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 32,
@@ -675,7 +699,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 33,
@@ -692,7 +717,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 34,
@@ -709,7 +735,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 35,
@@ -726,7 +753,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 36,
@@ -743,7 +771,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 37,
@@ -760,7 +789,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 38,
@@ -777,7 +807,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 39,
@@ -794,7 +825,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 40,
@@ -811,7 +843,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 41,
@@ -828,7 +861,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 42,
@@ -845,7 +879,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 43,
@@ -862,7 +897,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 44,
@@ -879,7 +915,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 45,
@@ -896,7 +933,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 46,
@@ -913,7 +951,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 47,
@@ -930,7 +969,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 48,
@@ -947,7 +987,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 49,
@@ -964,7 +1005,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 50,
@@ -981,7 +1023,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 51,
@@ -998,7 +1041,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 52,
@@ -1015,7 +1059,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 53,
@@ -1032,7 +1077,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 54,
@@ -1049,7 +1095,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 55,
@@ -1066,7 +1113,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 56,
@@ -1083,7 +1131,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 57,
@@ -1100,7 +1149,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 58,
@@ -1117,7 +1167,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 59,
@@ -1134,7 +1185,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 60,
@@ -1151,7 +1203,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 61,
@@ -1168,7 +1221,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 62,
@@ -1185,7 +1239,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 63,
@@ -1202,7 +1257,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 64,
@@ -1219,7 +1275,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 65,
@@ -1236,7 +1293,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 66,
@@ -1253,7 +1311,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 67,
@@ -1270,7 +1329,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 68,
@@ -1287,7 +1347,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 69,
@@ -1304,7 +1365,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 70,
@@ -1321,7 +1383,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 71,
@@ -1338,7 +1401,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 72,
@@ -1355,7 +1419,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 73,
@@ -1372,7 +1437,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": "★重症心身障害児対応"
+    "note": "★重症心身障害児対応",
+    "reviews": []
   },
   {
     "no": 74,
@@ -1389,7 +1455,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 75,
@@ -1406,7 +1473,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 76,
@@ -1423,7 +1491,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 77,
@@ -1440,7 +1509,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 78,
@@ -1457,7 +1527,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 79,
@@ -1474,7 +1545,8 @@ const FACILITIES = [
     "url": "",
     "features": "",
     "updated": "2025年",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 80,
@@ -1491,7 +1563,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：未就学児・小・中・高　送迎：×　個別指導・集団指導",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 81,
@@ -1508,7 +1581,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：未就学児・小・中・高　送迎：×　個別指導",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 82,
@@ -1525,7 +1599,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：未就学児・小学生　送迎：○（一部）　個別指導・集団指導",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 83,
@@ -1542,7 +1617,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：未就学児・小学生（中学生）　送迎：×　運動療育等",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 84,
@@ -1559,7 +1635,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：未就学児・小・中・高　送迎：○　毎回幼稚園、保育園、学校、ご自宅までお迎え、帰りも自宅まで送りあり。",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 85,
@@ -1576,7 +1653,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　R6.9開設",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 86,
@@ -1593,7 +1671,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　R7.4開設",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 87,
@@ -1610,7 +1689,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 88,
@@ -1627,7 +1707,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小5〜高　送迎：○（一部）",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 89,
@@ -1644,7 +1725,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 90,
@@ -1661,7 +1743,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：×",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 91,
@@ -1678,7 +1761,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 92,
@@ -1695,7 +1779,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　肢体不自由児対象",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 93,
@@ -1712,7 +1797,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　絵画、工作",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 94,
@@ -1729,7 +1815,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　集団療育（ドッジビー活動や音楽、アトリエ活動、調理や外出イベントあり）",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 95,
@@ -1746,7 +1833,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　介護保険共生型・医療的ケア児・重症心身障害児など",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   },
   {
     "no": 96,
@@ -1763,7 +1851,8 @@ const FACILITIES = [
     "url": "",
     "features": "対象：小・中・高　送迎：○　体育療育（粗大運動・ビジョントレーニング）",
     "updated": "令和7年7月",
-    "note": ""
+    "note": "",
+    "reviews": []
   }
 ];
 let currentCity = 'all';
@@ -1781,7 +1870,7 @@ function toggleJuji(btn) {
 }
 function applyFilters() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  let filtered = FACILITIES.filter(f => {
+  const filtered = FACILITIES.filter(f => {
     const cityOk = currentCity === 'all' || f.city === currentCity;
     const jujiOk = !jujiOnly || f.juji === '○';
     const searchOk = !q || [f.name, f.address, f.features, f.operator, f.type].some(v => v && v.toLowerCase().includes(q));
@@ -1820,7 +1909,18 @@ function renderList(facilities) {
       if (f.url) html += '<div class="card-info-item"><span class="card-info-label">🌐</span><span class="card-info-value"><a href="' + esc(f.url) + '" target="_blank" rel="noopener">ホームページ</a></span></div>';
       html += '</div>';
       if (f.features) html += '<div class="card-features">' + esc(f.features) + '</div>';
-      html += '<div class="card-kuchikomi"><div class="kuchikomi-title">👨‍👩‍👧 PTA会員による口コミ情報</div><div class="kuchikomi-empty">まだ口コミがありません</div></div>';
+      html += '<div class="card-kuchikomi"><div class="kuchikomi-title">👨‍👩‍👧 PTA会員による口コミ情報</div>';
+      if (f.reviews && f.reviews.length > 0) {
+        f.reviews.forEach(r => {
+          html += '<div class="review-item">' + esc(r.content);
+          const meta = [r.date, r.childStatus, r.period].filter(Boolean).join(' ｜ ');
+          if (meta) html += '<div class="review-meta">' + esc(meta) + '</div>';
+          html += '</div>';
+        });
+      } else {
+        html += '<div class="kuchikomi-empty">まだ口コミがありません</div>';
+      }
+      html += '</div>';
       html += '<div class="card-footer"><div class="card-updated">情報確認：' + esc(f.updated) + '</div><a class="correction-btn" href="' + corrUrl + '" target="_blank" rel="noopener">✏️ 情報の修正を依頼する</a></div>';
       html += '</div>';
     });
