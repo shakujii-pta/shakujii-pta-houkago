@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>放課後デイサービス情報ポータル｜石神井特別支援学校PTA</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #2D6A4F;
+  --green-light: #52B788;
+  --green-pale: #D8F3DC;
+  --amber: #E76F51;
+  --amber-pale: #FFF3EC;
+  --gray-dark: #1B2B1F;
+  --gray-mid: #4A5E51;
+  --gray-light: #F4F8F5;
+  --border: #C8DDD0;
+  --white: #FFFFFF;
+  --juji: #FFF7E6;
+  --juji-border: #F4A261;
+  --shadow: 0 2px 12px rgba(45,106,79,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--gray-light);
+  color: var(--gray-dark);
+  min-height: 100vh;
+}
+
+/* ヘッダー */
+header {
+  background: var(--green);
+  color: white;
+  padding: 28px 24px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.header-inner { max-width: 900px; margin: 0 auto; }
+.header-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  opacity: 0.75;
+  margin-bottom: 4px;
+}
+header h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(16px, 4vw, 22px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.header-meta {
+  margin-top: 6px;
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+/* 検索・フィルター */
+.controls {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky;
+  top: 88px;
+  z-index: 99;
+  box-shadow: var(--shadow);
+}
+.controls-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  background: var(--gray-light);
+}
+.search-box input:focus { border-color: var(--green-light); background: white; }
+.search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-mid);
+  font-size: 15px;
+  pointer-events: none;
+}
+.filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: white;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: var(--gray-mid);
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--green-light); color: var(--green); }
+.filter-btn.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  font-weight: 700;
+}
+.filter-btn.juji-filter.active {
+  background: var(--amber);
+  border-color: var(--amber);
+}
+.result-count {
+  font-size: 12px;
+  color: var(--gray-mid);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* メインコンテンツ */
+main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+/* お知らせバナー */
+.notice {
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green-light);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray-mid);
+}
+.notice strong { color: var(--green); }
+
+/* 市区セクション */
+.city-section { margin-bottom: 32px; }
+.city-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--green-pale);
+}
+.city-badge {
+  background: var(--green);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-family: 'Noto Serif JP', serif;
+}
+.city-count { font-size: 13px; color: var(--gray-mid); }
+
+/* 施設カード */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.18s, transform 0.18s;
+  cursor: pointer;
+}
+.card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.card.juji { border-left: 4px solid var(--amber); background: var(--juji); }
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gray-dark);
+  line-height: 1.4;
+  flex: 1;
+}
+.badges { display: flex; gap: 4px; flex-wrap: wrap; flex-shrink: 0; }
+.badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge-type {
+  background: var(--green-pale);
+  color: var(--green);
+  border: 1px solid var(--green-light);
+}
+.badge-juji {
+  background: var(--amber-pale);
+  color: var(--amber);
+  border: 1px solid var(--amber);
+}
+.card-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px 16px;
+  font-size: 13px;
+  color: var(--gray-mid);
+  margin-bottom: 10px;
+}
+.card-info-item { display: flex; gap: 6px; align-items: flex-start; }
+.card-info-label { color: var(--green); font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+.card-info-value { flex: 1; line-height: 1.5; }
+.card-info-value a {
+  color: var(--green);
+  text-decoration: none;
+  word-break: break-all;
+}
+.card-info-value a:hover { text-decoration: underline; }
+.card-features {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray-mid);
+  padding: 10px 12px;
+  background: var(--gray-light);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.card-kuchikomi {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+.kuchikomi-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.kuchikomi-empty {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.correction-btn {
+  font-size: 11px;
+  color: var(--green);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.correction-btn:hover {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+.card-updated {
+  font-size: 10px;
+  color: #bbb;
+  text-align: right;
+  margin-top: 8px;
+}
+
+/* フォームリンクバナー */
+.form-banner {
+  background: var(--green);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-banner-text { color: white; }
+.form-banner-text h2 { font-size: 15px; margin-bottom: 4px; }
+.form-banner-text p { font-size: 12px; opacity: 0.8; }
+.form-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.form-link-btn {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.18s;
+  white-space: nowrap;
+}
+.form-link-btn:hover { opacity: 0.85; }
+.btn-kuchikomi { background: white; color: var(--green); }
+.btn-correction { background: rgba(255,255,255,0.2); color: white; border: 1.5px solid rgba(255,255,255,0.5); }
+
+/* 空状態 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray-mid);
+}
+.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; }
+
+/* フッター */
+footer {
+  background: var(--green);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 24px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+footer strong { color: white; }
+
+@media (max-width: 600px) {
+  .controls { top: 76px; }
+  .card-info { grid-template-columns: 1fr; }
+  header { padding: 16px; }
+  header h1 { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">石神井特別支援学校 PTA</div>
+    <h1>放課後デイサービス情報ポータル</h1>
+    <div class="header-meta">西東京市・武蔵野市・練馬区 ｜ PTA会員限定・要URL共有</div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="施設名・住所・特徴で検索..." oninput="applyFilters()">
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="setCity('all', this)">すべて</button>
+      <button class="filter-btn" onclick="setCity('西東京市', this)">西東京市</button>
+      <button class="filter-btn" onclick="setCity('武蔵野市', this)">武蔵野市</button>
+      <button class="filter-btn" onclick="setCity('練馬区', this)">練馬区</button>
+      <button class="filter-btn juji-filter" onclick="toggleJuji(this)">🏥 重症心身障害児対応</button>
+    </div>
+    <div class="result-count" id="resultCount"></div>
+  </div>
+</div>
+
+<main>
+  <div class="notice">
+    <strong>ご利用にあたって：</strong>掲載情報は各市区の公開資料をもとにしており、最新情報は各施設に直接お問い合わせください。
+    口コミはPTA会員からの投稿を役員が審査の上、掲載しています。情報の誤りにお気づきの場合は下記フォームからお知らせください。
+  </div>
+
+  <div class="form-banner">
+    <div class="form-banner-text">
+      <h2>情報提供・口コミ投稿</h2>
+      <p>実際に利用した感想や情報修正をお寄せください</p>
+    </div>
+    <div class="form-links">
+      <a class="form-link-btn btn-kuchikomi" href="https://docs.google.com/forms/d/e/1FAIpQLSc_t4HbBOW7zojC4bIoz1OR8qEUVekMtpwXNjqghwbX-fGMgw/viewform" target="_blank">💬 口コミを投稿する</a>
+      <a class="form-link-btn btn-correction" href="https://docs.google.com/forms/d/e/1FAIpQLSd-RPua2cF5l8owzfruNEXcDQLzvuqIO8__LLlOBluM_NL4hA/viewform" target="_blank">✏️ 情報の修正を依頼する</a>
+    </div>
+  </div>
+
+  <div id="facilityList"></div>
+</main>
+
+<footer>
+  <strong>石神井特別支援学校PTA</strong><br>
+  このページはPTA会員向けの情報共有を目的としています。URLの外部への無断共有はご遠慮ください。<br>
+  掲載情報の誤りや口コミ投稿は上記フォームからお願いします。
+</footer>
+
+<script>
+const FACILITIES = [
+  {
+    "no": 1,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "Pur aile ひばりが丘",
+    "operator": "株式会社高齢者住環境研究所",
+    "zip": "",
+    "address": "西東京市ひばりが丘北3-7-14 メゾンウィステリア1階",
+    "tel": "(042)438-8201",
+    "fax": "(042)438-8202",
+    "email": "mizokei@kojuken.com",
+    "url": "http://www.puraile.com/",
+    "features": "毎日、日替わりで様々な講座を行っています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 2,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "シュプロスひばりヶ丘教室",
+    "operator": "一般社団法人シュプロス",
+    "zip": "",
+    "address": "西東京市谷戸町2-15-13 ペアパレスインひばりが丘201",
+    "tel": "(042)422-2671",
+    "fax": "(042)439-3062",
+    "email": "hibarigaoka@spros.jp",
+    "url": "http://spros.jp",
+    "features": "①1つでも多く自立できる事を増やし、②ありのままの自分を受け入れ、③人から愛される人物になる、様に支援しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 3,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "シュプロスひばりヶ丘教室Ⅱ",
+    "operator": "一般社団法人シュプロス",
+    "zip": "",
+    "address": "西東京市ひばりが丘1-8-24 エリシオン1F",
+    "tel": "(042)439-3472",
+    "fax": "(042)439-3062",
+    "email": "hibarigaoka2@spros.jp",
+    "url": "http://spros.jp",
+    "features": "小学校1年生〜高校3年生まで対象・送迎あり",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 4,
+    "city": "西東京市",
+    "type": "児童発達支援・放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援つむぎ武蔵野ルーム",
+    "operator": "社会福祉法人どろんこ会",
+    "zip": "",
+    "address": "西東京市新町5-17-20 2F",
+    "tel": "(042)227-7273",
+    "fax": "(042)227-7274",
+    "email": "",
+    "url": "http://www.doronko.jp/",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 5,
+    "city": "西東京市",
+    "type": "放課後等デイサービス・児童発達支援",
+    "juji": "",
+    "name": "Basic あいおん",
+    "operator": "一般社団法人ION",
+    "zip": "",
+    "address": "西東京市保谷町3-25-8",
+    "tel": "(042)452-9610",
+    "fax": "(042)452-9611",
+    "email": "ion_houkago@yahoo.co.jp",
+    "url": "http://www.ion-aion.org",
+    "features": "自立や就労準備に特化した事業所です。プログラム（絵画・しごと・運動）を通じて就労に必要なスキル、自己コントロールができる力を身につけていけるよう支援しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 6,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス 希歩",
+    "operator": "一般社団法人希歩",
+    "zip": "",
+    "address": "西東京市田無町5-11-13 ハイセレサ田無シティハウス105号",
+    "tel": "(042)439-5270",
+    "fax": "(042)439-5271",
+    "email": "noa.musashino@gmail.com",
+    "url": "http://h-navi.jp/support_facility/facilities/163690",
+    "features": "おそうじやお洗濯など、家事に重点を置いた活動を行っています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 7,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ウイング西東京",
+    "operator": "特定非営利活動法人空の翼",
+    "zip": "",
+    "address": "西東京市東伏見2-4-10",
+    "tel": "(042)452-3540",
+    "fax": "(042)452-3541",
+    "email": "wing_nishitokyo@soranotsubasa.com",
+    "url": "http://soranotsubasa.com/",
+    "features": "調理実習、工作、絵画、音楽作業訓練、体幹訓練、教科学習、ルールゲームなどを通じて3つの力（生活力、余暇力（余暇を楽しむ力）、体験力）を伸ばすことを目指し療育的な取組みを中心とした活動を行っています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 8,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "くまさん 保谷教室",
+    "operator": "くまさん合同会社",
+    "zip": "",
+    "address": "西東京市東町2-9-7",
+    "tel": "(042)439-3399",
+    "fax": "",
+    "email": "",
+    "url": "https://kuma3ho-day.com",
+    "features": "工作・レクリエーション・調理など集団活動を通じて、社会性を養えるよう支援します。また、「個別課題」の時間を設け、それぞれの目標に合った課題に取り組めるよう支援します。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 9,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "児童デイ 月のうさぎ",
+    "operator": "有限会社ヒューマン福祉サービス",
+    "zip": "",
+    "address": "西東京市東町3-5-5 イーストファイブビル202",
+    "tel": "(03)5933-3463",
+    "fax": "(03)5933-3464",
+    "email": "satokaze@sage.ocn.ne.jp",
+    "url": "https://www.tuki-no-usagi.com/",
+    "features": "主に発達障害の小中高生を対象に、料理療法の考えを取り入れたおやつづくりと外遊び、生活動作の支援に力を入れています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 10,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "りぼんU",
+    "operator": "特定非営利活動法人ハンディキャップサポートすまいるウィズ",
+    "zip": "",
+    "address": "西東京市柳沢6-4-3-106",
+    "tel": "(042)452-5026",
+    "fax": "(042)452-5027",
+    "email": "ribbon-u@eagle.ocn.ne.jp",
+    "url": "https://smilewith.tokyo/ribonu/",
+    "features": "小学生〜高校生までを対象とし、小学生と中高生で、活動内容によっては分かれて活動。小学生は外遊び中心の活動の中で、集団活動、体力作りにつながるプログラムを提供。中・高校生は、集団生活への適応や社会生活の向上などを目指し、様々な体験を通じ適切な支援を行なっています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 11,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "療育型放課後等デイサービス ここいろ第1",
+    "operator": "社会福祉法人睦月会",
+    "zip": "",
+    "address": "西東京市田無町7-8-14",
+    "tel": "(042)465-7890",
+    "fax": "(042)452-3520",
+    "email": "cocoiro@mutukikai.or.jp",
+    "url": "http://www.mutsukikai.jp/",
+    "features": "生活能力や社会経験向上のために療育活動や余暇活動を放課後や長期休暇中に提供しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 12,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "療育型放課後等デイサービス ここいろ第2",
+    "operator": "社会福祉法人睦月会",
+    "zip": "",
+    "address": "西東京市田無町4-17-14 西東京市障害者総合支援センターフレンドリー",
+    "tel": "(042)452-2775",
+    "fax": "(042)452-2776",
+    "email": "cocoiro@mutukikai.or.jp",
+    "url": "http://www.mutsukikai.jp/",
+    "features": "生活能力や社会経験向上のために療育活動や余暇活動を放課後や長期休暇中に提供しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 13,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ととろキッズ",
+    "operator": "NPO法人ととろクラブ",
+    "zip": "",
+    "address": "西東京市芝久保町2-22-32 グレイフル芝久保102",
+    "tel": "(042)452-3469",
+    "fax": "(042)451-7115",
+    "email": "totoro-club@nifty.com",
+    "url": "https://totoroclub.or.jp/",
+    "features": "障害を抱えるお子さんの気持ちに寄り添った対応をし、社会での適応能力を高めるためにサポートしています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 14,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ととろクラブ",
+    "operator": "NPO法人ととろクラブ",
+    "zip": "",
+    "address": "西東京市芝久保町2-22-33",
+    "tel": "(042)450-0991",
+    "fax": "(042)451-7115",
+    "email": "totoro-club@nifty.com",
+    "url": "https://totoroclub.or.jp/",
+    "features": "近所のコンビニや大型スーパーなどへ行き買い物を通して社会のルールやマナーを学ぶ機会を設けています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 15,
+    "city": "西東京市",
+    "type": "児童発達支援・放課後等デイサービス",
+    "juji": "",
+    "name": "こぱんはうすさくら 西東京教室",
+    "operator": "株式会社move",
+    "zip": "",
+    "address": "西東京市田無町4-17-18 ドミール田無103号、105号室",
+    "tel": "(042)468-2620",
+    "fax": "(042)468-2630",
+    "email": "copin.nisitokyo0601@outlook.jp",
+    "url": "http://copain-sakura.com",
+    "features": "放課後等デイサービスと児童発達支援の複合施設です。集団での活動をメインに療育を行っております。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 16,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス・ペヤール",
+    "operator": "株式会社ラズミ",
+    "zip": "",
+    "address": "西東京市ひばりが丘北3-3-29 ドルメンひばりが丘102",
+    "tel": "(042)425-4088",
+    "fax": "(042)425-4088",
+    "email": "",
+    "url": "https://razm1109.com",
+    "features": "主に障がいのあるお子さんを対象に、体幹トレーニングなど、体育教員による、体を強くするエクササイズを提供しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 17,
+    "city": "西東京市",
+    "type": "放課後等デイサービス（重症心身障害）",
+    "juji": "○",
+    "name": "Life Design うぃーる",
+    "operator": "社会福祉法人睦月会",
+    "zip": "",
+    "address": "西東京市泉町3-5-10",
+    "tel": "(042)439-8358",
+    "fax": "(042)439-8307",
+    "email": "wheel@mutukikai.or.jp",
+    "url": "http://www.mutsukikai.jp/",
+    "features": "小学生〜高校生の重症心身障害児を対象としており、医療ケアを必要とする児童の受け入れもしています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 18,
+    "city": "西東京市",
+    "type": "児童発達支援・放課後等デイサービス",
+    "juji": "",
+    "name": "らいおんハート遊びリテーション児童デイらぷあ田無",
+    "operator": "医療介護ケア協会",
+    "zip": "",
+    "address": "西東京市田無町3-10-15",
+    "tel": "(042)452-5160",
+    "fax": "(042)452-5165",
+    "email": "kids-tanashi@lion-heart.co",
+    "url": "https://lion-heart.co/kids/",
+    "features": "遊びの中に「運動/SST/微細/LST」などの療育要素を取り入れた支援に力を入れています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 19,
+    "city": "西東京市",
+    "type": "児童発達支援・放課後等デイサービス",
+    "juji": "",
+    "name": "らいおんハート遊びリテーション児童デイらぷあ西東京",
+    "operator": "医療介護ケア協会",
+    "zip": "",
+    "address": "西東京市田無町7-2-14 レフィナード103号室",
+    "tel": "(042)452-5681",
+    "fax": "(042)452-5682",
+    "email": "kids-nishitokyo@lion-heart.co",
+    "url": "https://lion-heart.co/kids/",
+    "features": "遊びの中の療育実践をモットーに、毎日楽しいイベントを行っています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 20,
+    "city": "西東京市",
+    "type": "児童発達支援・重症心身障害児通所",
+    "juji": "○",
+    "name": "うさぎのみみ",
+    "operator": "一般社団法人うさぎのみみ",
+    "zip": "",
+    "address": "西東京市東町1-6-3 中川ビル1F",
+    "tel": "(042)439-9568",
+    "fax": "(042)439-4807",
+    "email": "care@usagino-mimi.net",
+    "url": "http://usagino-mimi.net",
+    "features": "医療的ケアが必要な障害のある方や障害のあるお子さんを主な対象とし、児童発達支援、生活介護の2事業を運営しています。「だれも孤立させない」「みんなに居場所と出番を」を理念に、地域とのつながりを大切にしています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 21,
+    "city": "西東京市",
+    "type": "児童発達支援",
+    "juji": "",
+    "name": "LITALICOジュニア西武柳沢教室",
+    "operator": "株式会社LITALICOパートナーズ",
+    "zip": "",
+    "address": "西東京市保谷町5-8-13 カーサビアンカ2020 102-B",
+    "tel": "(042)460-3550",
+    "fax": "(042)460-3551",
+    "email": "",
+    "url": "http://junior.litalico.jp/school/tokyo/lj-6082/",
+    "features": "発達が気になる未就学児のお子さまに、最適な学びを提供します。また、お子さまが通う保育園や幼稚園などを訪問し、連携を図ることで、お子さまの環境に向けた支援も提供しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 22,
+    "city": "西東京市",
+    "type": "放課後等デイサービス・児童発達支援",
+    "juji": "",
+    "name": "放課後等デイサービス ウィズユー東伏見",
+    "operator": "株式会社ベイツリー",
+    "zip": "",
+    "address": "西東京市富士町2-10-15 シュ・モア東伏見1階A号",
+    "tel": "(042)452-6700",
+    "fax": "(042)452-6700",
+    "email": "",
+    "url": "http://www.with-ac.com/shisetu/higashifushimi/",
+    "features": "お子様達がリラックスしてのびのび過ごせるような放課後等デイサービス・児童発達支援を目指しています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 23,
+    "city": "西東京市",
+    "type": "児童発達支援",
+    "juji": "",
+    "name": "発達支援つむぎ 田無ルーム",
+    "operator": "社会福祉法人どろんこ会",
+    "zip": "",
+    "address": "西東京市田無町5-5-12 田無総合福祉センター2階",
+    "tel": "(042)452-3621",
+    "fax": "(042)452-3631",
+    "email": "tsumugi.tanashi@doronko.jp",
+    "url": "https://www.doronko.jp",
+    "features": "戸外に出て生き物や泥遊びなど、子どもがやりたいことをじっくり取り組めるよう支援を行います。生活型（マンスリー）と通所型（ビジター）コースがあり、給食提供も行っています。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 24,
+    "city": "西東京市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "くまさん 西東京",
+    "operator": "くまさん合同会社",
+    "zip": "",
+    "address": "西東京市富士町2-7-19",
+    "tel": "(042)454-2754",
+    "fax": "(042)454-2754",
+    "email": "kuma3ntokyo@gmail.com",
+    "url": "http://kuma3ho-day.com",
+    "features": "西東京市在住の小1〜高3のお子様が通われています。「楽しさの中に成長」をモットーに毎日様々な活動に取り組んでいます。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 25,
+    "city": "西東京市",
+    "type": "児童発達支援・放課後等デイサービス",
+    "juji": "",
+    "name": "児童発達支援・放課後等デイサービス りぼん",
+    "operator": "特定非営利活動法人ハンディキャップサポートすまいるウィズ",
+    "zip": "",
+    "address": "西東京市保谷町2-10-12 菊池ビル102",
+    "tel": "(042)452-6272",
+    "fax": "(042)452-9575",
+    "email": "smilewith.ribbon@outlook.jp",
+    "url": "http://smilewith.tokyo/ribon/",
+    "features": "和太鼓を叩いたり、戸外や室内での「運動」を通して体幹や感覚など身体の中心がしっかり発達するように支援します。",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 26,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "シルバーハート放課後デイサービス ひまわりとしまえん",
+    "operator": "有限会社シルバーハート",
+    "zip": "176-0001",
+    "address": "練馬4-24-15 コーナス豊島園1階",
+    "tel": "03-6915-8844",
+    "fax": "03-6915-8020",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 27,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス ここのは",
+    "operator": "Felix株式会社",
+    "zip": "176-0004",
+    "address": "小竹町1-43-6 アゼリア小竹1階",
+    "tel": "03-5948-3760",
+    "fax": "03-5948-3761",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 28,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "NPO法人ふれあい学童 空",
+    "operator": "特定非営利活動法人ふれあい広場空",
+    "zip": "176-0012",
+    "address": "豊玉北2-16-3 セントローズ江古田1階",
+    "tel": "03-6915-8782",
+    "fax": "03-6915-8768",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 29,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援室あかねっこ 練馬教室",
+    "operator": "社会福祉法人あかねの会",
+    "zip": "176-0012",
+    "address": "豊玉北4-27-2 練馬民団ビル1階",
+    "tel": "03-6914-7515",
+    "fax": "03-6914-7515",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 30,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス ウィズ・ユー豊玉中",
+    "operator": "ソレイユ合同会社",
+    "zip": "176-0013",
+    "address": "豊玉中3-17-14",
+    "tel": "03-6914-8212",
+    "fax": "03-6914-8214",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 31,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援センタージョイナス 中村橋駅前教室",
+    "operator": "株式会社ジョイナス",
+    "zip": "176-0021",
+    "address": "貫井1-1-4 トレスリーオス2階",
+    "tel": "03-5848-6484",
+    "fax": "03-3577-3025",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 32,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "かめの子教室",
+    "operator": "特定非営利活動法人かめの子教室",
+    "zip": "176-0021",
+    "address": "貫井3-28-6 つばさハウス1階",
+    "tel": "03-5936-4892",
+    "fax": "03-5936-4892",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 33,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援センタージョイナス 向山教室",
+    "operator": "株式会社ジョイナス",
+    "zip": "176-0022",
+    "address": "向山1-15-2 上野ビル3階",
+    "tel": "03-5848-4843",
+    "fax": "03-5848-4844",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 34,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援センタージョイナス 中村橋教室",
+    "operator": "株式会社ジョイナス",
+    "zip": "176-0023",
+    "address": "中村北3-9-8 第2真ビル201号",
+    "tel": "03-5848-8653",
+    "fax": "03-5848-8654",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 35,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス ぱれっと",
+    "operator": "労働者協同組合ワーカーズコープ・センター事業団",
+    "zip": "177-0031",
+    "address": "三原台2-18-2 グリーンビル1階",
+    "tel": "03-3867-3903",
+    "fax": "03-5935-6862",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 36,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ラフカkids",
+    "operator": "特定非営利活動法人ラフカ",
+    "zip": "177-0032",
+    "address": "谷原4-20-31 ディアコート・アクア1階",
+    "tel": "03-6915-9675",
+    "fax": "03-6915-9676",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 37,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "すまいる・キッズ＆すまいる・ツリー",
+    "operator": "社会福祉法人未来こどもランド",
+    "zip": "177-0032",
+    "address": "谷原5-22-2 MKLビル2階",
+    "tel": "03-5923-6566",
+    "fax": "03-5923-6533",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 38,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "このこのリーフ谷原",
+    "operator": "MIRAIA株式会社",
+    "zip": "177-0032",
+    "address": "谷原6-3-5",
+    "tel": "03-5923-7827",
+    "fax": "03-5923-7828",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 39,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "すまいる・ステップ",
+    "operator": "社会福祉法人未来こどもランド",
+    "zip": "177-0033",
+    "address": "高野台3-12-9 メゾンドサントロペ1階",
+    "tel": "03-3904-3400",
+    "fax": "03-3904-3550",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 40,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス ゆとっち",
+    "operator": "株式会社ゆとりな",
+    "zip": "177-0041",
+    "address": "石神井町7-32-7 1階",
+    "tel": "03-6913-3719",
+    "fax": "03-6913-3719",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 41,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス がくどうタイム上石神井校",
+    "operator": "S&K合同会社",
+    "zip": "177-0044",
+    "address": "上石神井1-42-7 サンライトフジ101号室",
+    "tel": "03-5903-8428",
+    "fax": "03-5903-8429",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 42,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス はつらつ",
+    "operator": "社会福祉法人立正福祉会",
+    "zip": "177-0044",
+    "address": "上石神井2-27-2 カシミアマンション102",
+    "tel": "03-6279-7837",
+    "fax": "03-6279-7837",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 43,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ふるーれプラス",
+    "operator": "特定非営利活動法人子どもと歩む・るみえーる",
+    "zip": "177-0045",
+    "address": "石神井台3-24-35",
+    "tel": "03-6913-3913",
+    "fax": "03-6913-3913",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 44,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス ウィズ・ユー石神井",
+    "operator": "株式会社コミュニケーションラボ",
+    "zip": "177-0045",
+    "address": "石神井台5-22-41 フォーラム石神井105",
+    "tel": "03-5903-8341",
+    "fax": "03-5903-8296",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 45,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "このこのリーフ練馬",
+    "operator": "株式会社WEBTATE",
+    "zip": "177-0045",
+    "address": "石神井台5-22-41 フォーラム石神井106",
+    "tel": "03-5903-8247",
+    "fax": "03-5903-8248",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 46,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "くまさん",
+    "operator": "くまさん合同会社",
+    "zip": "177-0045",
+    "address": "石神井台5-25-27",
+    "tel": "03-5903-9981",
+    "fax": "03-5903-9982",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 47,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス 陽 てぃーら",
+    "operator": "株式会社にじ",
+    "zip": "177-0045",
+    "address": "石神井台7-26-6",
+    "tel": "03-6331-0695",
+    "fax": "03-5934-4106",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 48,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ハーモニー",
+    "operator": "株式会社楽健",
+    "zip": "177-0045",
+    "address": "石神井台8-18-27 1階",
+    "tel": "03-5935-6670",
+    "fax": "03-5935-6670",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 49,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "TAKUMI 練馬武蔵関",
+    "operator": "イニシアス株式会社",
+    "zip": "177-0051",
+    "address": "関町北1-15-15",
+    "tel": "03-5903-8880",
+    "fax": "03-5903-8980",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 50,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援研究所スプラウト 武蔵関教室",
+    "operator": "特定非営利活動法人発達支援研究所スプラウト",
+    "zip": "177-0051",
+    "address": "関町北2-24-10 LUCE関町001号",
+    "tel": "03-6904-9593",
+    "fax": "03-6904-9563",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 51,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス うぃんくる",
+    "operator": "労働者協同組合ワーカーズコープ・センター事業団",
+    "zip": "177-0051",
+    "address": "関町北3-1-3 MSビル1階",
+    "tel": "03-6279-7886",
+    "fax": "03-6279-7886",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 52,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス ロップ",
+    "operator": "トリオキャリア株式会社",
+    "zip": "177-0052",
+    "address": "関町東2-14-4 橋本ビル1階",
+    "tel": "03-6904-7469",
+    "fax": "03-6904-7469",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 53,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "あいの風キッズステーション",
+    "operator": "株式会社日本在宅ケア教育研究所",
+    "zip": "177-0052",
+    "address": "関町東2-15-8 マンション柚子101号",
+    "tel": "03-5903-8493",
+    "fax": "03-5903-8494",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 54,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "療育ルーム りんごの木",
+    "operator": "株式会社りんりん",
+    "zip": "178-0061",
+    "address": "大泉学園町1-28-5 ハピネスオミノ202",
+    "tel": "03-6321-2611",
+    "fax": "03-6677-1562",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 55,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "いまここ大泉学園",
+    "operator": "合同会社imacoco",
+    "zip": "178-0061",
+    "address": "大泉学園町8-7-35 エリゼ大泉学園1階",
+    "tel": "03-5935-6753",
+    "fax": "03-5935-6754",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 56,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "児童デイサービス OHANA KIDS 大泉学園",
+    "operator": "株式会社K&Tライフケアサービス",
+    "zip": "178-0061",
+    "address": "大泉学園町8-25-18 エスファルド102",
+    "tel": "03-5935-4623",
+    "fax": "03-5935-4624",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 57,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "放課後等デイサービス あいの風ベスティ",
+    "operator": "株式会社日本在宅ケア教育研究所",
+    "zip": "178-0062",
+    "address": "大泉町2-62-11",
+    "tel": "03-5935-8370",
+    "fax": "03-5935-8375",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 58,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "ふれあい学童 空",
+    "operator": "株式会社朋",
+    "zip": "178-0062",
+    "address": "大泉町5-35-1 ジョイハウス北園1階",
+    "tel": "03-5935-4615",
+    "fax": "03-5935-4616",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 59,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援室あかねっこ 大泉教室",
+    "operator": "社会福祉法人あかねの会",
+    "zip": "178-0063",
+    "address": "東大泉3-3-10 きのえビル101号",
+    "tel": "03-3921-3105",
+    "fax": "03-6904-5155",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 60,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "療育ルームりんごの木 こぐれ教室",
+    "operator": "株式会社りんりん",
+    "zip": "178-0063",
+    "address": "東大泉3-66-18",
+    "tel": "03-6904-5605",
+    "fax": "03-6904-5607",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 61,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "でぃあな",
+    "operator": "合同会社Five nine",
+    "zip": "178-0063",
+    "address": "東大泉4-25-16",
+    "tel": "03-5935-9478",
+    "fax": "03-5935-9479",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 62,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "HITONOWA 南大泉教室",
+    "operator": "株式会社tai-tan",
+    "zip": "178-0064",
+    "address": "南大泉4-52-16 森下ビル1階",
+    "tel": "03-5935-8610",
+    "fax": "03-5935-8613",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 63,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "フレンドリーサービス西大泉",
+    "operator": "株式会社フレンドリーサービス",
+    "zip": "178-0065",
+    "address": "西大泉3-30-12 コア西大泉1階C号室",
+    "tel": "03-5935-6323",
+    "fax": "03-5935-6376",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 64,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "このこのリーフ光が丘",
+    "operator": "MIRAIA株式会社",
+    "zip": "179-0071",
+    "address": "旭町1-41-12",
+    "tel": "03-5968-8357",
+    "fax": "03-5968-8358",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 65,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "練馬区立こども発達支援センター",
+    "operator": "練馬区（委託：特定非営利活動法人発達支援研究所スプラウト）",
+    "zip": "179-0072",
+    "address": "光が丘3-1-1",
+    "tel": "03-3975-6251",
+    "fax": "03-3975-6252",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 66,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "はじめのいっぽ春日町 学童教室くろーばー",
+    "operator": "特定非営利活動法人練馬春日町幼児教室",
+    "zip": "179-0073",
+    "address": "田柄1-4-30",
+    "tel": "03-6909-8157",
+    "fax": "03-6909-8158",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 67,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "みかん",
+    "operator": "特定非営利活動法人子どもの夢と思い出作り舎",
+    "zip": "179-0074",
+    "address": "春日町3-1-12 クリスタルエム1階",
+    "tel": "03-5848-3747",
+    "fax": "03-5848-3747",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 68,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "シルバーハート放課後デイサービスひまわり",
+    "operator": "有限会社シルバーハート",
+    "zip": "179-0074",
+    "address": "春日町5-33-30 2階",
+    "tel": "03-3577-8840",
+    "fax": "03-3577-8836",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 69,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ゆめの園みらいず春日町 放課後等デイサービス",
+    "operator": "社会福祉法人ハッピーネット",
+    "zip": "179-0074",
+    "address": "春日町5-33-33 春日町NCビル1階",
+    "tel": "03-5848-7455",
+    "fax": "03-5848-7455",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 70,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "発達支援室あかねっこ 春日町教室",
+    "operator": "社会福祉法人あかねの会",
+    "zip": "179-0075",
+    "address": "高松2-26-6 サングリーン高松2階",
+    "tel": "03-5933-9209",
+    "fax": "03-3999-3955",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 71,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "あんしぇる",
+    "operator": "一般社団法人おあしす",
+    "zip": "179-0075",
+    "address": "高松4-31-3",
+    "tel": "03-3990-9380",
+    "fax": "03-3990-9380",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 72,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "にじ色くらぶ",
+    "operator": "株式会社三ツ和",
+    "zip": "179-0075",
+    "address": "高松6-5-8 フジハイムⅡ 102",
+    "tel": "03-5923-9643",
+    "fax": "03-5923-9641",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 73,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "シルバーハート放課後デイサービス ひまわり光が丘",
+    "operator": "有限会社シルバーハート",
+    "zip": "179-0075",
+    "address": "高松6-14-19 ファブリエ1階",
+    "tel": "03-5923-6616",
+    "fax": "03-5923-6615",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": "★重症心身障害児対応"
+  },
+  {
+    "no": 74,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "にじ色くらぶ・ジュニア",
+    "operator": "株式会社三ツ和",
+    "zip": "179-0076",
+    "address": "土支田2-3-1",
+    "tel": "03-5923-9644",
+    "fax": "03-5923-9631",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 75,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "つむぎの里 雅 錦",
+    "operator": "株式会社ミヤビカ",
+    "zip": "179-0082",
+    "address": "錦1-16-10",
+    "tel": "03-6906-5699",
+    "fax": "03-6906-6992",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 76,
+    "city": "練馬区",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "unico練馬錦",
+    "operator": "株式会社HIRAC",
+    "zip": "179-0082",
+    "address": "錦2-9-12 メゾン錦101",
+    "tel": "03-6912-3776",
+    "fax": "050-3383-1329",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 77,
+    "city": "練馬区",
+    "type": "児童発達支援",
+    "juji": "",
+    "name": "幼児教室とことこぽけっと",
+    "operator": "社会福祉法人未来・ねりま",
+    "zip": "179-0075",
+    "address": "高松4-31-3",
+    "tel": "03-5848-3351",
+    "fax": "03-5848-3352",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 78,
+    "city": "練馬区",
+    "type": "児童発達支援",
+    "juji": "",
+    "name": "LITALICOジュニア東武練馬教室",
+    "operator": "株式会社LITALICOパートナーズ",
+    "zip": "179-0081",
+    "address": "北町2-14-6",
+    "tel": "03-5945-1081",
+    "fax": "03-5945-1082",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 79,
+    "city": "練馬区",
+    "type": "児童発達支援",
+    "juji": "",
+    "name": "unico練馬錦",
+    "operator": "株式会社HIRAC",
+    "zip": "179-0082",
+    "address": "錦2-9-12 メゾン錦101",
+    "tel": "03-6912-3776",
+    "fax": "050-3383-1329",
+    "email": "",
+    "url": "",
+    "features": "",
+    "updated": "2025年",
+    "note": ""
+  },
+  {
+    "no": 80,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "リニエプラッツ吉祥寺",
+    "operator": "株式会社リニエR（※旧おれんじ学園）",
+    "zip": "",
+    "address": "武蔵野市吉祥寺北町3-5-8 1F-110",
+    "tel": "0422-50-0323",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：未就学児・小・中・高　送迎：×　個別指導・集団指導",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 81,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "スタジオそら武蔵野",
+    "operator": "アース・キッズ株式会社",
+    "zip": "",
+    "address": "武蔵野市中町1-23-12 クレール武蔵野1F",
+    "tel": "0422-50-0389",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：未就学児・小・中・高　送迎：×　個別指導",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 82,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "リニエプラッツ武蔵野",
+    "operator": "株式会社リニエR（※旧おれんじ学園nico）",
+    "zip": "",
+    "address": "武蔵野市中町1-19-8 シティハイツ武蔵野1F",
+    "tel": "0422-38-5073",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：未就学児・小学生　送迎：○（一部）　個別指導・集団指導",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 83,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "KIZUNA武蔵野",
+    "operator": "一般社団法人ライフタイムコンディション",
+    "zip": "",
+    "address": "武蔵野市西久保2-12-7 メゾン欅1F",
+    "tel": "0422-27-7220",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：未就学児・小学生（中学生）　送迎：×　運動療育等",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 84,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ウィズ・ユー吉祥寺",
+    "operator": "株式会社くらや",
+    "zip": "",
+    "address": "武蔵野市吉祥寺北町4-13-5",
+    "tel": "0422-53-0820",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：未就学児・小・中・高　送迎：○　毎回幼稚園、保育園、学校、ご自宅までお迎え、帰りも自宅まで送りあり。",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 85,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "しろくまナーシング",
+    "operator": "株式会社アール・エヌ・シー",
+    "zip": "",
+    "address": "武蔵野市中町1-24-6",
+    "tel": "0422-38-4658",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　R6.9開設",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 86,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービスささえ",
+    "operator": "株式会社ささえ倶楽部",
+    "zip": "",
+    "address": "武蔵野市吉祥寺本町1-35-14 ユニアス七井ビル",
+    "tel": "0422-27-1736",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　R7.4開設",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 87,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "あすはKids",
+    "operator": "社会福祉法人おおぞら会",
+    "zip": "",
+    "address": "武蔵野市八幡町3-3-26",
+    "tel": "0422-36-5151",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 88,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "千川さくらんぼクラブ",
+    "operator": "社会福祉法人武蔵野千川福祉会",
+    "zip": "",
+    "address": "武蔵野市八幡町2-5-3",
+    "tel": "080-5458-9175",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小5〜高　送迎：○（一部）",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 89,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ウイングむさしの",
+    "operator": "株式会社障害福祉ウイング・グループ",
+    "zip": "",
+    "address": "武蔵野市境南町2-13-5 グレーハイツ泉妻1階",
+    "tel": "0422-30-8431",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 90,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ティーンズ吉祥寺",
+    "operator": "株式会社Kaien",
+    "zip": "",
+    "address": "武蔵野市吉祥寺本町2-25-12 Santa Fe 1-C",
+    "tel": "050-2018-2842",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：×",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 91,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "放課後等デイサービス wacca",
+    "operator": "plus it. 株式会社",
+    "zip": "",
+    "address": "武蔵野市八幡町3-8-6 ニューハイツ武蔵野1階",
+    "tel": "0422-38-8919",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 92,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "武蔵野市放課後等デイサービス パレット",
+    "operator": "社会福祉法人武蔵野",
+    "zip": "",
+    "address": "武蔵野市桜堤1-9-9 桜堤ケアハウス2階",
+    "tel": "—",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　肢体不自由児対象",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 93,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "アトリエあいおん",
+    "operator": "一般社団法人ION",
+    "zip": "",
+    "address": "武蔵野市緑町1-5-13",
+    "tel": "0422-38-7512",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　絵画、工作",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 94,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "ウイング西久保",
+    "operator": "株式会社障害福祉ウイング・グループ",
+    "zip": "",
+    "address": "武蔵野市西久保2-27-23 トライコートB",
+    "tel": "0422-38-5995",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　集団療育（ドッジビー活動や音楽、アトリエ活動、調理や外出イベントあり）",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 95,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "○",
+    "name": "Workshop RNC",
+    "operator": "株式会社アール・エヌ・シー",
+    "zip": "",
+    "address": "武蔵野市西久保2-6-1",
+    "tel": "0422-38-5839",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　介護保険共生型・医療的ケア児・重症心身障害児など",
+    "updated": "令和7年7月",
+    "note": ""
+  },
+  {
+    "no": 96,
+    "city": "武蔵野市",
+    "type": "放課後等デイサービス",
+    "juji": "",
+    "name": "PEあいおん",
+    "operator": "一般社団法人ION",
+    "zip": "",
+    "address": "武蔵野市桜堤3-31-18",
+    "tel": "0422-38-8250",
+    "fax": "",
+    "email": "",
+    "url": "",
+    "features": "対象：小・中・高　送迎：○　体育療育（粗大運動・ビジョントレーニング）",
+    "updated": "令和7年7月",
+    "note": ""
+  }
+];
+
+let currentCity = 'all';
+let jujiOnly = false;
+
+function setCity(city, btn) {
+  currentCity = city;
+  document.querySelectorAll('.filter-btn:not(.juji-filter)').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function toggleJuji(btn) {
+  jujiOnly = !jujiOnly;
+  btn.classList.toggle('active', jujiOnly);
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  let filtered = FACILITIES.filter(f => {
+    const cityOk = currentCity === 'all' || f.city === currentCity;
+    const jujiOk = !jujiOnly || f.juji === '○';
+    const searchOk = !q || [f.name, f.address, f.features, f.operator, f.type]
+      .some(v => v && v.toLowerCase().includes(q));
+    return cityOk && jujiOk && searchOk;
+  });
+  renderList(filtered);
+}
+
+function renderList(facilities) {
+  const container = document.getElementById('facilityList');
+  document.getElementById('resultCount').textContent = `${facilities.length}件表示中`;
+
+  if (facilities.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>該当する施設が見つかりませんでした</p></div>`;
+    return;
+  }
+
+  // 市区ごとにグループ化
+  const cityOrder = ['西東京市', '武蔵野市', '練馬区'];
+  const groups = {};
+  cityOrder.forEach(c => { groups[c] = []; });
+  facilities.forEach(f => { if (groups[f.city]) groups[f.city].push(f); });
+
+  let html = '';
+  cityOrder.forEach(city => {
+    const list = groups[city];
+    if (!list.length) return;
+    html += `<div class="city-section">
+      <div class="city-header">
+        <span class="city-badge">${city}</span>
+        <span class="city-count">${list.length}件</span>
+      </div>`;
+    list.forEach(f => {
+      const isJuji = f.juji === '○';
+      html += `<div class="card${isJuji ? ' juji' : ''}">
+        <div class="card-header">
+          <div class="card-name">${esc(f.name)}</div>
+          <div class="badges">
+            <span class="badge badge-type">${esc(shortType(f.type))}</span>
+            ${isJuji ? '<span class="badge badge-juji">🏥 重症心身障害児対応</span>' : ''}
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-info-item">
+            <span class="card-info-label">📍</span>
+            <span class="card-info-value">${esc(f.address)}</span>
+          </div>
+          <div class="card-info-item">
+            <span class="card-info-label">📞</span>
+            <span class="card-info-value">${esc(f.tel) || '—'}</span>
+          </div>
+          ${f.email ? `<div class="card-info-item">
+            <span class="card-info-label">✉️</span>
+            <span class="card-info-value"><a href="mailto:${esc(f.email)}">${esc(f.email)}</a></span>
+          </div>` : ''}
+          ${f.url ? `<div class="card-info-item">
+            <span class="card-info-label">🌐</span>
+            <span class="card-info-value"><a href="${esc(f.url)}" target="_blank" rel="noopener">ホームページ</a></span>
+          </div>` : ''}
+        </div>
+        ${f.features ? `<div class="card-features">${esc(f.features)}</div>` : ''}
+        <div class="card-kuchikomi">
+          <div class="kuchikomi-title">👨‍👩‍👧 PTA会員による口コミ情報</div>
+          <div class="kuchikomi-empty">まだ口コミがありません</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-updated">情報確認：${esc(f.updated)}</div>
+          <a class="correction-btn" href="${correctionUrl(f)}" target="_blank" rel="noopener">✏️ 情報の修正を依頼する</a>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function correctionUrl(f) {
+  const base = 'https://docs.google.com/forms/d/e/1FAIpQLSd-RPua2cF5l8owzfruNEXcDQLzvuqIO8__LLlOBluM_NL4hA/viewform?usp=pp_url';
+  const city = encodeURIComponent(f.city);
+  const name = encodeURIComponent(f.name);
+  return `${base}&entry.1824358995=${city}&entry.1225600427=${name}`;
+}
+
+function shortType(type) {
+  if (!type) return '';
+  if (type.includes('放課後') && type.includes('児童発達')) return '放課後デイ・児発';
+  if (type.includes('放課後')) return '放課後デイ';
+  if (type.includes('児童発達')) return '児童発達支援';
+  return type.substring(0, 10);
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// 初期表示
+applyFilters();
+</script>
+</body>
+</html>
